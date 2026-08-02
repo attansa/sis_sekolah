@@ -1,0 +1,37 @@
+# Composer
+/vendor/
+
+# NodeJS
+/node_modules/
+
+# Environment
+.env
+
+# Log
+*.log
+
+# Windows
+Thumbs.db
+
+# MacOS
+.DS_Store
+
+# VSCode
+.vscode/
+
+# Sublime
+*.sublime-workspace
+*.sublime-project
+
+# Upload Evidence
+/uploads/evidence/*
+!/uploads/evidence/.gitkeep
+
+#Upload Materi
+/uploads/materi/*
+!/uploads/materi/.gitkeep
+
+# Backup
+*.zip
+*.rar
+*.sql
