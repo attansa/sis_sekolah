@@ -115,38 +115,23 @@ readonly>
 <div class="col-md-6">
 
 <div class="form-group">
+    <label>Jabatan</label>
 
-<label>Jabatan</label>
+    <select name="jabatan_id" class="form-control" required>
 
+        <?php foreach($jabatan as $j): ?>
 
-<select name="jabatan_id"
-class="form-control"
-required>
+        <option
+            value="<?= $j['id']; ?>"
+            <?= ($guru['jabatan_id']==$j['id']) ? 'selected' : ''; ?>>
 
+            <?= $j['nama_jabatan']; ?>
 
-<option value="">
--- Pilih Jabatan --
-</option>
+        </option>
 
+        <?php endforeach; ?>
 
-<?php foreach($jabatan as $j): ?>
-
-
-<option value="<?= $j['id'] ?>"
-<?= ($guru['jabatan_id']==$j['id']) ? 'selected':'' ?>>
-
-
-<?= htmlspecialchars($j['nama_jabatan']) ?>
-
-
-</option>
-
-
-<?php endforeach; ?>
-
-
-</select>
-
+    </select>
 
 </div>
 

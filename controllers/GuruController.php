@@ -39,6 +39,8 @@ class GuruController
     public function edit($id)
     {
         return $this->guru->find($id);
+        $jabatan = $this->jabatan->all();
+        include __DIR__.'/../views/guru/edit.php';
     }
 
     // ==========================
