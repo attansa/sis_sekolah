@@ -310,30 +310,30 @@ return $stmt->execute([
     // KPI sesuai Jabatan
     // ======================================
 
-    public function getKPIJabatan($jabatan)
-    {
+    // public function getKPIJabatan($jabatan)
+    // {
 
-        $stmt=$this->db->prepare("
-            SELECT
+    //     $stmt=$this->db->prepare("
+    //         SELECT
 
-                mk.*
+    //             mk.*
 
-            FROM kpi_jabatan kj
+    //         FROM kpi_jabatan kj
 
-            INNER JOIN master_kpi mk
+    //         INNER JOIN master_kpi mk
 
-                ON mk.id=kj.kpi_id
+    //             ON mk.id=kj.kpi_id
 
-            WHERE kj.jabatan_id=?
+    //         WHERE kj.jabatan_id=?
 
-            ORDER BY mk.kode
-        ");
+    //         ORDER BY mk.kode
+    //     ");
 
-        $stmt->execute([$jabatan]);
+    //     $stmt->execute([$jabatan]);
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    }
+    // }
     // ======================================
 // Detail KPI
 // ======================================

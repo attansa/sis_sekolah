@@ -101,10 +101,24 @@ required>
         placeholder="Masukkan Target KPI"
         required>
 
-<input
-    type="hidden"
-    name="kpi_id"
-    value="<?= $kpi[0]['id']; ?>">
+<div class="form-group">
+<label>Kategori KPI</label>
+
+<select name="kpi_id" class="form-control" required>
+
+<?php foreach($kpi as $row): ?>
+
+<option value="<?= $row['id']; ?>">
+
+<?= $row['nama_kpi']; ?>
+
+</option>
+
+<?php endforeach; ?>
+
+</select>
+
+</div>
 
 </div>
 </div>

@@ -45,37 +45,26 @@ class EvidenceController
     // Form Tambah
     // ==========================================
 
-   public function create()
+  public function create()
 {
     $user = [
+
         'id'         => $_SESSION['id'],
         'nama'       => $_SESSION['nama'],
-        'jabatan'    => $_SESSION['jabatan'] ?? '',
-        'jabatan_id' => $_SESSION['jabatan_id'] ?? 0
+        'jabatan'    => $_SESSION['jabatan'],
+        'jabatan_id' => $_SESSION['jabatan_id']
+
     ];
 
-    // default kosong
-    $kpi = [];
-
-    // hanya guru yang mengambil KPI dari jabatan
-    if(userRole() == "guru"){
-
-        if(!empty($_SESSION['jabatan_id'])){
-
-            $kpi = $this->evidence->getKPIJabatan($_SESSION['jabatan_id']);
-
-        }
-
-    }
+    $kpi = $this->evidence->getKPI();
 
     return [
 
-        'user' => $user,
-        'kpi'  => $kpi
+        'user'=>$user,
+        'kpi'=>$kpi
 
     ];
 }
-
     // ==========================================
     // Detail Evidence
     // ==========================================
