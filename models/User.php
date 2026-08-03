@@ -18,15 +18,21 @@ class User
     public function login($username,$password)
 {
     $stmt = $this->db->prepare("
-        SELECT
-            u.*,
-            j.nama_jabatan
-        FROM users u
-        LEFT JOIN jabatan j
-            ON j.id = u.jabatan_id
-        WHERE u.username = ?
-        LIMIT 1
-    ");
+    SELECT
+        u.*,
+        g.jabatan_id,
+        j.nama_jabatan
+    FROM users u
+
+    LEFT JOIN guru g
+        ON g.user_id = u.id
+
+    LEFT JOIN jabatan j
+        ON j.id = g.jabatan_id
+
+    WHERE u.username = ?
+    LIMIT 1
+");
 
     $stmt->execute([$username]);
 
