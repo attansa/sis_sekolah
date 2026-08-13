@@ -102,21 +102,35 @@ required>
         required>
 
 <div class="form-group">
-<label>Kategori KPI</label>
 
-<select name="kpi_id" class="form-control" required>
+    <label>Kategori KPI</label>
 
-<?php foreach($kpi as $row): ?>
+    <select name="kpi_id" class="form-control" required>
 
-<option value="<?= $row['id']; ?>">
+        <?php foreach($kpi as $row): ?>
 
-<?= $row['nama_kpi']; ?>
+            <option value="<?= $row['id']; ?>">
+                <?= htmlspecialchars($row['nama_kpi']); ?>
+            </option>
 
-</option>
+        <?php endforeach; ?>
 
-<?php endforeach; ?>
+    </select>
 
-</select>
+    <small class="form-text text-muted mt-2">
+        <i class="fas fa-info-circle"></i>
+        Silakan lihat KPI yang ada di drive sesuai jabatan
+    </small>
+
+    <a
+        href="https://drive.google.com/drive/folders/1IcEAGjCtqhK4zm9RzM6Wt6abDMMXT7-d?usp=drive_link"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-sm btn-outline-primary mt-1"
+    >
+        <i class="fab fa-google-drive"></i>
+        Lihat Panduan Evidence
+    </a>
 
 </div>
 

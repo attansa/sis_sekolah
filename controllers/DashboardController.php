@@ -1,142 +1,188 @@
 <?php
 
-require_once __DIR__.'/../models/Dashboard.php';
+require_once __DIR__ . '/../models/Dashboard.php';
 
 class DashboardController
 {
-
     private $dashboard;
 
     public function __construct()
     {
-        $this->dashboard=new Dashboard();
+        $this->dashboard = new Dashboard();
     }
 
-public function index()
-{
-    $guru    = $this->dashboard->totalGuru();
-    $siswa   = $this->dashboard->totalSiswa();
-    $hadir   = $this->dashboard->hadirHariIni();
-    $pulang  = $this->dashboard->pulangHariIni();
-    $kpi     = $this->dashboard->totalKPI();
-    $jurnal  = $this->dashboard->jurnalHariIni();
-    $ranking = $this->dashboard->rankingGuru();
+    // =========================================================
+    // DASHBOARD UTAMA
+    // =========================================================
+    public function index()
+    {
+        // Statistik umum
+        $guru    = $this->dashboard->totalGuru();
+        $siswa   = $this->dashboard->totalSiswa();
+        $hadir   = $this->dashboard->hadirHariIni();
+        $pulang  = $this->dashboard->pulangHariIni();
+        $kpi     = $this->dashboard->totalKPI();
+        $jurnal  = $this->dashboard->jurnalHariIni();
+        $ranking = $this->dashboard->rankingGuru();
 
-    ob_start();
+        ob_start();
 
-switch(userRole()){
+        switch (userRole()) {
 
-    case 'superadmin':
-        include __DIR__.'/../views/dashboard/superadmin.php';
-    break;
+            // =================================================
+            // SUPER ADMIN
+            // =================================================
+            case 'superadmin':
 
-    case 'kepsek':
+                include __DIR__ . '/../views/dashboard/superadmin.php';
 
-    $statistik = $this->dashboard->statistik();
+                break;
 
-    $grafik = $this->dashboard->grafikKPI();
 
-    $ranking = $this->dashboard->topGuru();
+            // =================================================
+            // KEPSEK & SDM
+            // =================================================
+            case 'kepsek':
+            case 'sdm':
 
-    $aktivitas = $this->dashboard->aktivitas();
+                // Statistik
+                $statistik = $this->dashboard->statistik();
 
-    $staff = $this->dashboard->totalStaff();
+                // Grafik KPI
+                $grafik = $this->dashboard->grafikKPI();
 
-    $pending = $this->dashboard->evidencePending();
+                // Ranking Guru
+                $ranking = $this->dashboard->topGuru();
 
-    $approve = $this->dashboard->evidenceApprove();
+                // Aktivitas
+                $aktivitas = $this->dashboard->aktivitas();
 
-    $revisi = $this->dashboard->evidenceRevisi();
+                // Total Staff
+                $staff = $this->dashboard->totalStaff();
 
-    $rata = $this->dashboard->rataKPI();
+                // Statistik Evidence
+                $pending = $this->dashboard->evidencePending();
+                $approve = $this->dashboard->evidenceApprove();
+                $revisi  = $this->dashboard->evidenceRevisi();
 
-    // Kepsek melihat SEMUA evidence terbaru
-    $evidence = $this->dashboard->evidenceTerbaru();
+                // Rata-rata KPI
+                $rata = $this->dashboard->rataKPI();
 
-    include __DIR__.'/../views/dashboard/kepsek.php';
+                // Evidence terbaru SEMUA GURU
+                $evidence = $this->dashboard->evidenceTerbaru();
 
-break;
+                // SDM menggunakan dashboard yang sama dengan Kepsek
+                include __DIR__ . '/../views/dashboard/kepsek.php';
 
-    case 'guru':
+                break;
 
-    $evidence = $this->dashboard->evidenceTerbaru($_SESSION['id']);
 
-    include __DIR__.'/../views/dashboard/guru.php';
+            // =================================================
+            // GURU
+            // =================================================
+            case 'guru':
 
-break;
+                $evidence = $this->dashboard->evidenceTerbaru(
+                    $_SESSION['id']
+                );
 
-    case 'staff':
+                include __DIR__ . '/../views/dashboard/guru.php';
 
-    $data = $this->staff();
+                break;
 
-    $statistik = $data['statistik'];
-    $kpi       = $data['kpi'];
-    $evidence  = $data['evidence'];
-    $aktivitas = $data['aktivitas'];
 
-    include __DIR__.'/../views/dashboard/staff.php';
+            // =================================================
+            // STAFF
+            // =================================================
+            case 'staff':
 
-    break;
+                $data = $this->staff();
 
-    default:
-        include __DIR__.'/../views/dashboard/default.php';
-    break;
-    case 'sdm':
+                $statistik = $data['statistik'];
+                $kpi       = $data['kpi'];
+                $evidence  = $data['evidence'];
+                $aktivitas = $data['aktivitas'];
 
-$data = $this->dashboardKepsek();
+                include __DIR__ . '/../views/dashboard/staff.php';
 
-include __DIR__.'/../views/dashboard/sdm.php';
+                break;
 
-break;
-}
 
-    $content = ob_get_clean();
+            // =================================================
+            // DEFAULT
+            // =================================================
+            default:
 
-    include __DIR__.'/../views/layouts/master.php';
-}
-public function dashboardKepsek()
-{
+                include __DIR__ . '/../views/dashboard/default.php';
 
-    return [
+                break;
+        }
 
-        'statistik' => $this->dashboard->statistikKepsek(),
+        $content = ob_get_clean();
 
-        'kpi'       => $this->dashboard->grafikKPI(),
+        include __DIR__ . '/../views/layouts/master.php';
+    }
 
-        'guru'      => $this->dashboard->topGuru(),
 
-        'aktivitas' => $this->dashboard->aktivitas()
+    // =========================================================
+    // DATA DASHBOARD KEPSEK
+    // =========================================================
+    public function dashboardKepsek()
+    {
+        return [
 
-    ];
+            'statistik' => $this->dashboard->statistikKepsek(),
 
-}
+            'kpi' => $this->dashboard->grafikKPI(),
 
-public function dashboardSDM()
-{
+            'guru' => $this->dashboard->topGuru(),
 
-    return [
+            'aktivitas' => $this->dashboard->aktivitas()
 
-        'statistik'=>$this->dashboard->dashboardSDM(),
+        ];
+    }
 
-        'guru'=>$this->dashboard->topGuru(),
 
-        'aktivitas'=>$this->dashboard->aktivitas()
+    // =========================================================
+    // DATA DASHBOARD SDM
+    // =========================================================
+    public function dashboardSDM()
+    {
+        return [
 
-    ];
+            'statistik' => $this->dashboard->dashboardSDM(),
 
-}
-public function staff()
-{
-    return [
+            'guru' => $this->dashboard->topGuru(),
 
-        'statistik' => $this->dashboard->dashboardStaff($_SESSION['id']),
+            'aktivitas' => $this->dashboard->aktivitas()
 
-        'kpi' => $this->dashboard->ringkasanKPI($_SESSION['id']),
+        ];
+    }
 
-        'evidence' => $this->dashboard->evidenceTerbaru($_SESSION['id']),
 
-        'aktivitas' => $this->dashboard->aktivitasUser($_SESSION['id'])
+    // =========================================================
+    // DATA DASHBOARD STAFF
+    // =========================================================
+    public function staff()
+    {
+        return [
 
-    ];
-}
+            'statistik' => $this->dashboard->dashboardStaff(
+                $_SESSION['id']
+            ),
+
+            'kpi' => $this->dashboard->ringkasanKPI(
+                $_SESSION['id']
+            ),
+
+            'evidence' => $this->dashboard->evidenceTerbaru(
+                $_SESSION['id']
+            ),
+
+            'aktivitas' => $this->dashboard->aktivitasUser(
+                $_SESSION['id']
+            )
+
+        ];
+    }
 }

@@ -321,85 +321,99 @@ Evidence Terbaru
 
 <div class="card-body table-responsive">
 
-<table class="table table-hover">
+    <table class="table table-hover">
 
-<thead>
+        <thead>
+            <tr>
+                <th>Tanggal</th>
+                <th>Nama</th>
+                <th>Jabatan</th>
+                <th>KPI</th>
+                <th>Status</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
 
-<tr>
+        <tbody>
 
-<th>Tanggal</th>
+            <?php foreach ($evidence as $row): ?>
 
-<th>Nama</th>
+                <tr>
 
-<th>Jabatan</th>
+                    <!-- Tanggal -->
+                    <td>
+                        <?= htmlspecialchars($row['tanggal']); ?>
+                    </td>
 
-<th>KPI</th>
+                    <!-- Nama -->
+                    <td>
+                        <?= htmlspecialchars($row['nama']); ?>
+                    </td>
 
-<th>Status</th>
+                    <!-- Jabatan -->
+                    <td>
+                        <?= htmlspecialchars($row['nama_jabatan'] ?? '-'); ?>
+                    </td>
 
-<th>Aksi</th>
+                    <!-- KPI -->
+                    <td>
+                        <?= htmlspecialchars($row['nama_kpi'] ?? '-'); ?>
+                    </td>
 
-</tr>
+                    <!-- Status -->
+                    <td>
 
-</thead>
+                        <?php if ($row['status'] === 'pending'): ?>
 
-<tbody>
+                            <span class="badge badge-warning">
+                                Pending
+                            </span>
 
-<?php foreach($evidence as $row):?>
+                        <?php elseif ($row['status'] === 'approve'): ?>
 
-<tr>
+                            <span class="badge badge-success">
+                                Approve
+                            </span>
 
-<td><?= $row['tanggal']; ?></td>
+                        <?php elseif ($row['status'] === 'revisi'): ?>
 
-<td><?= $row['nama']; ?></td>
+                            <span class="badge badge-info">
+                                Revisi
+                            </span>
 
-<td><?= $row['nama_jabatan']; ?></td>
+                        <?php else: ?>
 
-<td><?= $row['nama_kpi']; ?></td>
+                            <span class="badge badge-danger">
+                                Ditolak
+                            </span>
 
-<td>
+                        <?php endif; ?>
 
-<?php
+                    </td>
+			<td>
 
-if($row['status']=="pending"){
+			    <!-- DETAIL -->
+			    <a
+			        href="evidence.php?action=detail&id=<?= $row['id']; ?>"
+			        class="btn btn-primary btn-sm"
+			    >
+			        <i class="fas fa-eye"></i>
+			        Detail
+			    </a>
 
-echo "<span class='badge badge-warning'>Pending</span>";
+			   
 
-}elseif($row['status']=="approve"){
+			</td>
 
-echo "<span class='badge badge-success'>Approve</span>";
+                </tr>
 
-}elseif($row['status']=="revisi"){
+            <?php endforeach; ?>
 
-echo "<span class='badge badge-info'>Revisi</span>";
+        </tbody>
 
-}else{
+    </table>
 
-echo "<span class='badge badge-danger'>Ditolak</span>";
-
-}
-
-?>
-
-</td>
-
-<td>
-
-<a href="evidence.php?action=detail&id=<?= $row['id']; ?>" class="btn btn-primary btn-sm">
-
-Detail
-
-</a>
-
-</td>
-
-</tr>
-
-<?php endforeach;?>
-
-</tbody>
-
-</table>
+</div>
 
 </div>
 

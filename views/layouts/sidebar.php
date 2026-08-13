@@ -353,47 +353,47 @@ $role = $_SESSION['role'] ?? '';
 
                 </li>
 
-                <?php endif; ?>
-<?php if($role=='kepsek'): ?>
+                        <?php endif; ?>
+        <?php if(userRole() == 'kepsek' || userRole() == 'sdm'): ?>
 
-<li class="nav-header">
-    MONITORING SEKOLAH
-</li>
+        <li class="nav-header">
+            MONITORING SEKOLAH
+        </li>
 
-<li class="nav-item">
-    <a href="<?= base_url('evidence.php') ?>" class="nav-link">
-        <i class="nav-icon fas fa-file-upload"></i>
-        <p>Approval Evidence</p>
-    </a>
-</li>
+        <li class="nav-item">
+            <a href="<?= base_url('evidence.php') ?>" class="nav-link">
+                <i class="nav-icon fas fa-file-upload"></i>
+                <p>Approval Evidence</p>
+            </a>
+        </li>
 
-<li class="nav-item">
-    <a href="<?= base_url('kinerja.php') ?>" class="nav-link">
-        <i class="nav-icon fas fa-chart-line"></i>
-        <p>Monitoring KPI</p>
-    </a>
-</li>
+        <li class="nav-item">
+            <a href="<?= base_url('kinerja.php') ?>" class="nav-link">
+                <i class="nav-icon fas fa-chart-line"></i>
+                <p>Monitoring KPI</p>
+            </a>
+        </li>
 
-<li class="nav-item">
-    <a href="<?= base_url('absensi_dashboard.php') ?>" class="nav-link">
-        <i class="nav-icon fas fa-fingerprint"></i>
-        <p>Dashboard Absensi</p>
-    </a>
-</li>
+        <li class="nav-item">
+            <a href="<?= base_url('absensi_dashboard.php') ?>" class="nav-link">
+                <i class="nav-icon fas fa-fingerprint"></i>
+                <p>Dashboard Absensi</p>
+            </a>
+        </li>
 
-<li class="nav-item">
-    <a href="<?= base_url('rekap_absensi.php') ?>" class="nav-link">
-        <i class="nav-icon fas fa-file-alt"></i>
-        <p>Rekap Absensi</p>
-    </a>
-</li>
+        <li class="nav-item">
+            <a href="<?= base_url('rekap_absensi.php') ?>" class="nav-link">
+                <i class="nav-icon fas fa-file-alt"></i>
+                <p>Rekap Absensi</p>
+            </a>
+        </li>
 
-<li class="nav-item">
-    <a href="<?= base_url('jurnal.php') ?>" class="nav-link">
-        <i class="nav-icon fas fa-book"></i>
-        <p>Monitoring Jurnal</p>
-    </a>
-</li>
+        <li class="nav-item">
+            <a href="<?= base_url('jurnal.php') ?>" class="nav-link">
+                <i class="nav-icon fas fa-book"></i>
+                <p>Monitoring Jurnal</p>
+            </a>
+        </li>
 
 <?php endif; ?>
                 <!-- GURU -->

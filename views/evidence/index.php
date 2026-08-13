@@ -150,7 +150,7 @@
 
                     <!-- Kepala Sekolah -->
 
-                    <?php if(userRole()=="kepsek" || userRole()=="superadmin"): ?>
+                    <?php if(userRole()=="kepsek" || userRole()=="superadmin" || userRole()=="sdm"): ?>
 
                         <a href="evidence.php?action=approve&id=<?= $row['id']; ?>"
                            class="btn btn-success btn-sm"

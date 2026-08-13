@@ -367,42 +367,46 @@ public function evidenceRevisi()
 // ======================================
 public function evidenceTerbaru($user = null)
 {
+    $sql = "
+        SELECT
+            e.*,
+            u.nama,
+            j.nama_jabatan,
+            mk.nama_kpi
+        FROM kpi_evidence e
 
-    if($user){
+        INNER JOIN users u
+            ON u.id = e.user_id
 
-        $stmt = $this->db->prepare("
-            SELECT
-                e.*,
-                u.nama
-            FROM kpi_evidence e
-            INNER JOIN users u
-                ON u.id=e.user_id
-            WHERE e.user_id=?
+        LEFT JOIN jabatan j
+            ON j.id = e.jabatan_id
+
+        LEFT JOIN master_kpi mk
+            ON mk.id = e.kpi_id
+    ";
+
+    if ($user) {
+        $sql .= "
+            WHERE e.user_id = ?
             ORDER BY e.id DESC
             LIMIT 10
-        ");
+        ";
 
+        $stmt = $this->db->prepare($sql);
         $stmt->execute([$user]);
 
-    }else{
+    } else {
 
-        $stmt = $this->db->prepare("
-            SELECT
-                e.*,
-                u.nama
-            FROM kpi_evidence e
-            INNER JOIN users u
-                ON u.id=e.user_id
+        $sql .= "
             ORDER BY e.id DESC
             LIMIT 10
-        ");
+        ";
 
+        $stmt = $this->db->prepare($sql);
         $stmt->execute();
-
     }
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 }
 // ======================================
 // Rata-rata KPI

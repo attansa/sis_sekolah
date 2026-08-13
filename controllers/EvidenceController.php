@@ -18,27 +18,51 @@ class EvidenceController
     // ==========================================
     // List Evidence
     // ==========================================
-    public function index()
+   public function index()
 {
+    $role = userRole();
 
-    if(userRole()=='guru' || userRole()=='staff'){
+    // ==========================================
+    // GURU & STAFF
+    // Hanya melihat evidence miliknya sendiri
+    // ==========================================
+
+    if ($role == 'guru' || $role == 'staff') {
 
         return $this->evidence->guru($_SESSION['id']);
 
     }
 
-    if(userRole()=='kepsek'){
+
+    // ==========================================
+    // KEPSEK & SDM
+    // Melihat semua evidence
+    // dan dapat melakukan approval
+    // ==========================================
+
+    if ($role == 'kepsek' || $role == 'sdm') {
 
         return $this->evidence->all();
 
     }
 
-    if(userRole()=='superadmin'){
+
+    // ==========================================
+    // SUPER ADMIN
+    // ==========================================
+
+    if ($role == 'superadmin') {
 
         return $this->evidence->all();
 
     }
 
+
+    // ==========================================
+    // DEFAULT
+    // ==========================================
+
+    return [];
 }
 
     // ==========================================
