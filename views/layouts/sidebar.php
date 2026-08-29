@@ -416,7 +416,7 @@ $role = $_SESSION['role'] ?? '';
 <li class="nav-item">
     <a href="<?= base_url('evidence.php') ?>" class="nav-link">
         <i class="nav-icon fas fa-file-upload"></i>
-        <p>Evidence KPI</p>
+        <p>Laporan Kinerja</p>
     </a>
 </li>
 
@@ -433,12 +433,12 @@ $role = $_SESSION['role'] ?? '';
 <?php endif; ?>
 
 <!-- Kinerja -->
-<li class="nav-item">
+<!-- <li class="nav-item">
     <a href="<?= base_url('kinerja.php') ?>" class="nav-link">
         <i class="nav-icon fas fa-chart-line"></i>
         <p>Kinerja Saya</p>
     </a>
-</li>
+</li> -->
 
 <?php endif; ?>
 

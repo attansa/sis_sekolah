@@ -4,7 +4,7 @@
 
         <h3 class="card-title">
 
-            Data Evidence KPI
+            Data Laporan Guru
 
         </h3>
 
